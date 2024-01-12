@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as exec from '@actions/exec'
 import * as main from '../src/main'
 
 // Mock the action's main function
@@ -14,6 +15,7 @@ let errorMock: jest.SpyInstance
 let getInputMock: jest.SpyInstance
 let setFailedMock: jest.SpyInstance
 let setOutputMock: jest.SpyInstance
+let execMock: jest.SpyInstance
 
 describe('action', () => {
   beforeEach(() => {
@@ -25,6 +27,7 @@ describe('action', () => {
     getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
     setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
     setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
+    execMock = jest.spyOn(exec, 'exec').mockImplementation()
   })
 
   it('sets the time output', async () => {
@@ -37,6 +40,7 @@ describe('action', () => {
           return ''
       }
     })
+    execMock.mockReturnValue(Promise.resolve())
 
     await main.run()
     expect(runMock).toHaveReturned()

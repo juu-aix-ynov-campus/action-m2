@@ -3998,8 +3998,7 @@ async function run() {
         // Log the current timestamp, wait, then log the new timestamp
         core.debug(new Date().toTimeString());
         await (0, wait_1.wait)(parseInt(ms, 10));
-        await (0, exec_1.exec)('echo', ['Hello', 'World!']);
-        await (0, exec_1.exec)('echo Hello World! 2');
+        await (0, exec_1.exec)('npm', ['ci']);
         core.debug(new Date().toTimeString());
         // Set outputs for other workflow steps to use
         core.setOutput('time', new Date().toTimeString());

@@ -16,8 +16,9 @@ export async function run(): Promise<void> {
     // Log the current timestamp, wait, then log the new timestamp
     core.debug(new Date().toTimeString())
     await wait(parseInt(ms, 10))
-    await exec('echo', ['Hello', 'World!'])
-    await exec('echo Hello World! 2')
+
+    await exec('npm', ['ci'])
+
     core.debug(new Date().toTimeString())
 
     // Set outputs for other workflow steps to use
