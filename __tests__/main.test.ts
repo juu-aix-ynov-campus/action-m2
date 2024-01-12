@@ -1,11 +1,3 @@
-/**
- * Unit tests for the action's main functionality, src/main.ts
- *
- * These should be run as if the action was called from a workflow.
- * Specifically, the inputs listed in `action.yml` should be set as environment
- * variables following the pattern `INPUT_<INPUT_NAME>`.
- */
-
 import * as core from '@actions/core'
 import * as main from '../src/main'
 
@@ -17,6 +9,7 @@ const timeRegex = /^\d{2}:\d{2}:\d{2}/
 
 // Mock the GitHub Actions core library
 let debugMock: jest.SpyInstance
+let warningMock: jest.SpyInstance
 let errorMock: jest.SpyInstance
 let getInputMock: jest.SpyInstance
 let setFailedMock: jest.SpyInstance
@@ -27,6 +20,7 @@ describe('action', () => {
     jest.clearAllMocks()
 
     debugMock = jest.spyOn(core, 'debug').mockImplementation()
+    warningMock = jest.spyOn(core, 'warning').mockImplementation()
     errorMock = jest.spyOn(core, 'error').mockImplementation()
     getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
     setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
@@ -48,13 +42,13 @@ describe('action', () => {
     expect(runMock).toHaveReturned()
 
     // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
+    expect(warningMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
     expect(debugMock).toHaveBeenNthCalledWith(
-      2,
+      1,
       expect.stringMatching(timeRegex)
     )
     expect(debugMock).toHaveBeenNthCalledWith(
-      3,
+      2,
       expect.stringMatching(timeRegex)
     )
     expect(setOutputMock).toHaveBeenNthCalledWith(
