@@ -42,7 +42,10 @@ describe('action', () => {
     expect(runMock).toHaveReturned()
 
     // Verify that all of the core library functions were called correctly
-    expect(warningMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
+    expect(warningMock).toHaveBeenNthCalledWith(
+      1,
+      'Waiting 500 milliseconds ...'
+    )
     expect(debugMock).toHaveBeenNthCalledWith(
       1,
       expect.stringMatching(timeRegex)
