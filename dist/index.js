@@ -3998,6 +3998,13 @@ async function run() {
         // Log the current timestamp, wait, then log the new timestamp
         core.debug(new Date().toTimeString());
         await (0, wait_1.wait)(parseInt(ms, 10));
+        try {
+            await (0, exec_1.exec)('test -f "package-lock.json"');
+        }
+        catch (e) {
+            core.error('package-lock.json not found');
+            return;
+        }
         await (0, exec_1.exec)('npm', ['ci']);
         core.debug(new Date().toTimeString());
         // Set outputs for other workflow steps to use

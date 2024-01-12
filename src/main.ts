@@ -16,6 +16,12 @@ export async function run(): Promise<void> {
     // Log the current timestamp, wait, then log the new timestamp
     core.debug(new Date().toTimeString())
     await wait(parseInt(ms, 10))
+    try {
+      await exec('test -f "package-lock.json"')
+    } catch (e) {
+      core.error('package-lock.json not found')
+      return
+    }
 
     await exec('npm', ['ci'])
 
